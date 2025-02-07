@@ -1,0 +1,10 @@
+# Ignore pasta de saída do TypeScript
+dist/
+
+# Ignore dependências
+node_modules/
+
+# Ignore arquivo de variáveis de ambiente
+.env
+
+# Qualquer outro arquivo ou pasta que você não queira versionar
