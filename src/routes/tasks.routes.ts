@@ -50,15 +50,15 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
       let transporter = nodemailer.createTransport({
         service: 'gmail', 
         auth: {
-          user: 'SEU-EMAIL@gmail.com',
-          pass: 'SUA_SENHA'
+          user: 'teste.programacao.thiago@gmail.com',
+          pass: 'Thi@go!80'
         }
       });
   
       const mailOptions = {
-        from: 'SEU_EMAIL@gmail.com',
+        from: 'teste.programacao.thiago@gmail.com',
         to: user.email,
-        subject: 'Recuperação de senha',
+        subject: 'Recuperação de senha - Sistema Thiago Task Manager',
         text: `Sua senha é: ${user.password}`
       };
   
@@ -69,5 +69,26 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
       return res.status(500).json({ message: 'Erro ao processar solicitação', error: error.message });
     }
 });
+
+// Rota de registro
+router.post('/register', async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Verificar se já existe email cadastrado
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Usuário já existe' });
+      }
+  
+      // Criar novo usuário
+      const newUser = new User({ email, password });
+      await newUser.save();
+  
+      return res.status(201).json({ message: 'Usuário criado com sucesso' });
+    } catch (error: any) {
+      return res.status(500).json({ message: 'Erro no servidor', error: error.message });
+    }
+  });
 
 export default router;
