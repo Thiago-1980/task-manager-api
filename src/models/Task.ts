@@ -5,7 +5,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface ITask extends Document {
   title: string;
   description?: string;
-  status: 'todo' | 'doing' | 'done';
+  //status: 'todo' | 'doing' | 'done';
+  status: string;
   createdAt: Date;
 }
 
@@ -14,7 +15,11 @@ const TaskSchema: Schema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: false },
   status: { type: String, enum: ['todo', 'doing', 'done'], default: 'todo' },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 // Exporta o modelo

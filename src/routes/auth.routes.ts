@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { User } from '../models/User';
 import jwt from 'jsonwebtoken';
+const SECRET = process.env.JWT_SECRET || 'fallback-secret';
 
 const authRouter = Router();
 
@@ -11,19 +12,19 @@ authRouter.post('/login', async (req: Request, res: Response) => {
   
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).json({ message: 'Credenciais inválidas' });
+        return res.status(401).json({ message: 'Usuário inválido' });
       }
   
       // Aqui, verificar a senha. Se estiver em texto plano no BD, compare direto.
       // Se usar hash, compare com bcrypt.
       if (user.password !== password) {
-        return res.status(401).json({ message: 'Credenciais inválidas' });
+        return res.status(401).json({ message: 'Senha inválida' });
       }
   
       // Gerar token JWT (opcional, caso use token)
-      const token = jwt.sign({ userId: user._id }, 'segredo', { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user._id }, SECRET, { expiresIn: '1h' });
   
-      return res.status(200).json({ token });
+      return res.status(200).json({ message: 'Login bem-sucedido', token });
     } catch (error: any) {
       return res.status(500).json({ message: 'Erro no servidor', error: error.message });
     }
