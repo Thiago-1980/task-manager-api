@@ -1,5 +1,5 @@
 # Ignore pasta de saída do TypeScript
-dist/
+
 
 # Ignore dependências
 node_modules/
