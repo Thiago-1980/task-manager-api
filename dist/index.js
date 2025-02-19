@@ -9,7 +9,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = require("./app");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/taskmanager';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb'; // 'mongodb://localhost:27017/taskmanager'
 // Conexão com o MongoDB
 mongoose_1.default.connect(MONGO_URI)
     .then(() => {
